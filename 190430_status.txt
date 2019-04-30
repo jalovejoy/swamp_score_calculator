@@ -1,0 +1,14 @@
+Data Collection:
+Data on food outlet, socioeconomic, population, obesity, and diabetes rates were collected from the United States Department of Agriculture (USDA) Food Atlas and the Centers for Disease Control and Prevention (CDC). The data are delineated at the county level using Federal Information Processing Standards (FIPS). Each of these larger datasets were filtered for the data relevant to the study, which were then combined into a single dataframe (see data dictionary).
+
+Key Indicators:
+A metric was built to represent the Traditional Retail Food Environment Index (RFEI):
+food_swamp = (Fast Food Restaurants + Convenience Stores) / Grocery Stores
+
+A metric was also built to represent an area that qualifies as a food desert, which was defined as 
+- Low income: household income ≤ 200% of the federal poverty threshold
+- Low access: more than 1 mile from a supermarket/grocery store in an urban area or more than 10 miles in a rural area
+food_desert = Population Low Access & Low Income / Population Estimate
+
+Exploratory Data Analysis:
+Scatter plots were used to visualize the effect of the Food Swamp and Food Desert metric on obesity rates. While there is no visibile correlation, early linear regressions do reveal a positive relationship between the determinants and obesity.
