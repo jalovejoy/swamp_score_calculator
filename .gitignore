@@ -1,6 +1,7 @@
 # Data
-.data/
-.foodSwamp_dataDict.tgn
+data/
+shapefiles/
+foodSwamp_dataDict.tgn
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
