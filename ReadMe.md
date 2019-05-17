@@ -29,7 +29,7 @@ For the FIPS County level study, data is collected from the USDA Food Atlas, USD
 | avgLifeExpec | FIPS County | The average life expectancy of residents | Float | CDC | 2010 |
 |  |  |  |  |  |  |
 
-The street address level data is collected using the [Google Places API](https://developers.google.com/places/web-service/intro).
+The street address level data is collected using the [Google Places API](https://developers.google.com/places/web-service/intro) with a search radius of 3000 meters. The distance from the input address to the grocery, fast food, or convenience store business is calculated using the [Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start)
 
 ### Findings & Results
 
