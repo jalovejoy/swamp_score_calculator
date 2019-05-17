@@ -33,10 +33,16 @@ The street address level data is collected using the [Google Places API](https:/
 
 ![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/swamp-score-flow.png)
 
+The collected data is stored in the following CSVs:
+- Address Level Swamp Score: CSV of businesses gathered against starting address, their distance to the start address, & associated swamp score
+- Business Locations: De-duplicated CSV of all Businesses by Type retrieved from all start addresses
+- Address Master: Master CSV of all start addresses and their associated swamp scores
+
+The data has been ommitted from this repository but can easily be collected by running the data_collection_location_based.ipynb notebook in /code_granular/.
 
 ### Findings & Results
 
-This study does not attempt to optimize a prediction (r<sup>2</sup> score) for obesity but rather intends to identify the efficacy of food swamps as a predictor at a statistically significant (p < 0.001) level. Using the same controls applied in the [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) study (Food Desert, Recreation Facilities, Natural Amenities, Milk/Soda Price Ratio, % Black, % Hispanic, Poverty Rate, County Size), significant relationships are found between food swamp scores and obesity, diabetes, deaths from strokes, and life expectancy. The findings from this stage emphasize the importance of food quality on health and support the idea that a food swamp metric is a valuable healthcare indicator. The notebooks for these results can be found under code/.
+This study does not attempt to optimize a prediction (r<sup>2</sup> score) for obesity but rather intends to identify the efficacy of food swamps as a predictor at a statistically significant (p < 0.001) level. Using the same controls applied in the [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) study (Food Desert, Recreation Facilities, Natural Amenities, Milk/Soda Price Ratio, % Black, % Hispanic, Poverty Rate, County Size), significant relationships are found between food swamp scores and obesity, diabetes, deaths from strokes, and life expectancy. The findings from this stage emphasize the importance of food quality on health and support the idea that a food swamp metric is a valuable healthcare indicator. The notebooks for these results can be found under /code/.
 
 Additionally, this project successfully built a tool to calculate food swamp scores at the street address level. As of 2019-05-16 data on over 15,000 businesses (fast food restaurants, convenience stores, grocery stores) have been collected and food swamp scores have been calculated for 18 addresses. [Staple Health](https://staplehealth.io/) is currently testing this tool on HIPAA protected patient data to determine its efficacy as an input in their machine learning models. Results are expected by June 10. The notebooks for these can be found under code/granular/.
 
