@@ -34,9 +34,9 @@ The street address level data is collected using the [Google Places API](https:/
 ![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/swamp-score-flow.png)
 
 The collected data is stored in the following CSVs:
-- Address Level Swamp Score: CSV of businesses gathered against starting address, their distance to the start address, & associated swamp score
-- Business Locations: De-duplicated CSV of all Businesses by Type retrieved from all start addresses
-- Address Master: Master CSV of all start addresses and their associated swamp scores
+- **Address Level Swamp Score:** CSV of businesses gathered against one specific starting address, their distance to the start address, & associated swamp score
+- **Business Locations:** A compiled and de-duplicated CSV of all Businesses by Type retrieved from all start addresses
+- **Address Master:** Master CSV of all start addresses and their associated swamp scores
 
 The data has been ommitted from this repository but can easily be collected by running the data_collection_location_based.ipynb notebook in /code_granular/.
 
@@ -44,10 +44,10 @@ The data has been ommitted from this repository but can easily be collected by r
 
 This study does not attempt to optimize a prediction (r<sup>2</sup> score) for obesity but rather intends to identify the efficacy of food swamps as a predictor at a statistically significant (p < 0.001) level. Using the same controls applied in the [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) study (Food Desert, Recreation Facilities, Natural Amenities, Milk/Soda Price Ratio, % Black, % Hispanic, Poverty Rate, County Size), significant relationships are found between food swamp scores and obesity, diabetes, deaths from strokes, and life expectancy. The findings from this stage emphasize the importance of food quality on health and support the idea that a food swamp metric is a valuable healthcare indicator. The notebooks for these results can be found under /code/.
 
-Additionally, this project successfully built a tool to calculate food swamp scores at the street address level. As of 2019-05-16 data on over 15,000 businesses (fast food restaurants, convenience stores, grocery stores) have been collected and food swamp scores have been calculated for 18 addresses. [Staple Health](https://staplehealth.io/) is currently testing this tool on HIPAA protected patient data to determine its efficacy as an input in their machine learning models. Results are expected by June 10. The notebooks for these can be found under code/granular/.
+Additionally, this project successfully built a tool to calculate food swamp scores at the street address level. As of 2019-05-16, data on over 15,000 businesses (fast food restaurants, convenience stores, grocery stores) have been collected and food swamp scores have been calculated for 18 addresses. [Staple Health](https://staplehealth.io/) is currently testing this tool on HIPAA protected patient data to determine its efficacy as an input in their machine learning models. Results are expected by June 10. The notebooks for these can be found under /code/granular/.
 
 ### Limitations & Considerations
 
-This project essentially acts as preliminary research and development into a feature for a larger model predicting a variety of healthcare outcomes. It's possible that while food swamps may be statistically significantly correlated with the healthcare outcomes researched in this project under the controls that [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) used, the food swamp score may have multicollinearity or may be statistically insignificant when paired with the larger feature set in [Staple Health](https://staplehealth.io/) current platform.
+This project essentially acts as preliminary research and development into a feature for a larger model predicting a variety of healthcare outcomes. It's possible that while food swamps may be statistically significantly correlated with the healthcare outcomes researched in this project under the controls that [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) used, the food swamp score may have multicollinearity or may be statistically insignificant when paired with the larger feature set in [Staple Health's](https://staplehealth.io/) current platform.
 
-A smaller considerations, as addressed in [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/), is that while obesity is the target for part of this project, there are issues with the way that obesity is calculated. Namely, there is debate over whether or not BMI is an accurate way of measuring obesity.
+A smaller consideration, as addressed in [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/), is that while obesity is the target for part of this project, there are issues with the way that obesity is calculated. Namely, there is debate over whether or not BMI is an accurate way of measuring obesity.
