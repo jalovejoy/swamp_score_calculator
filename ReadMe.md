@@ -29,7 +29,7 @@ For the FIPS County level study, data is collected from the USDA Food Atlas, USD
 | avgLifeExpec | FIPS County | The average life expectancy of residents | Float | CDC | 2010 |
 |  |  |  |  |  |  |
 
-The street address level data is collected using the [Google Places API](https://developers.google.com/places/web-service/intro) with a search radius of 3000 meters. The distance from the input address to the grocery, fast food, or convenience store business is calculated using the [Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start). The below diagram provides an effective overview of the current street level address data collection and processing methodology:
+The street address level data is collected using the [Google Places API](https://developers.google.com/places/web-service/intro) with a search radius of 3000 meters. The distance from the input address to the grocery, fast food, or convenience store business is calculated using the [Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start). The below diagram provides an overview of the current street level address data collection and processing methodology:
 
 ![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/swamp-score-flow.png)
 
@@ -50,4 +50,4 @@ Additionally, this project successfully built a tool to calculate food swamp sco
 
 This project essentially acts as preliminary research and development into a feature for a larger model predicting a variety of healthcare outcomes. It's possible that while food swamps may be statistically significantly correlated with the healthcare outcomes researched in this project under the controls that [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) used, the food swamp score may have multicollinearity or may be statistically insignificant when paired with the larger feature set in [Staple Health's](https://staplehealth.io/) current platform.
 
-A smaller consideration, as addressed in [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/), is that while obesity is the target for part of this project, there are issues with the way that obesity is calculated. Namely, there is debate over whether or not BMI is an accurate way of measuring obesity.
+Another smaller consideration, as addressed in [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/), is that while obesity is the target for part of this project, there are issues with the way that obesity is calculated. Namely, there is debate over whether or not BMI is an accurate way of measuring obesity.
