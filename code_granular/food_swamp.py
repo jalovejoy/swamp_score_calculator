@@ -256,8 +256,7 @@ def calculate_swamp_score(df):
 
 #################### User Input ####################
 ## API key input
-# google_api_key = input("Google API Key: Needs access to Geolocate API, Places API, Distance Matrix API: ")
-google_api_key = "AIzaSyARbUbY2ZBXJIWvEnz43fowdlGIuenqbuc "
+google_api_key = input("Google API Key: Needs access to Geolocate API, Places API, Distance Matrix API: ")
 gmaps = googlemaps.Client(key=google_api_key)
 
 
