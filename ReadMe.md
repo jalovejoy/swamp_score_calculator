@@ -33,10 +33,12 @@ The street address level data is collected using the [Google Places API](https:/
 
 ![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/swamp-score-flow.png)
 
-The collected data is stored in the following CSVs:
-- **Address Level Swamp Score:** CSV of businesses gathered against one specific starting address, their distance to the start address, & associated swamp score
-- **Business Locations:** A compiled and de-duplicated CSV of all Businesses by Type retrieved from all start addresses
-- **Address Master:** Master CSV of all start addresses and their associated swamp scores
+Recognizing that consumers are more likely to shop at a closer location than a further away location, a weighting system was applied to locations within an hour of the starting address (anything more than an hour was not counted). For each starting or input address, the weight of each business location is calculated in 3 ways:
+- Points = (# places <10 minutes x 3) + (# places < 20 minutes x 2) + (# places < 60 minutes x 1)
+- Gradient Points = abs(time to business in seconds - 3600)
+- Exponential Gradient Points = (abs(time to business in seconds - 3600) ** 3) / 1_000_000_000
+
+The output of this script is a **Swamp Score Summary** CSV that includes the points for each establishment type (Fast Food, Grocery Store, Convenience Store) as well as the composite swamp score for each of the three scoring methodologies.
 
 The data has been ommitted from this repository but can easily be collected by running the data_collection_location_based.ipynb notebook in /code_granular/.
 

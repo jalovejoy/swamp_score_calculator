@@ -42,7 +42,11 @@ def run_address_list(address_list):
         address_df = google_distances(address, address_df['end_address'], address_df)
 
         master_df = pd.concat([master_df, address_df])
-    
+
+	## Drops rows with duplicate addresses –– for example "Chipotle" search may have picked up "Taco Bell" and vice versa
+	master_df = master_df.drop_duplicates(subset="end_address", keep="first")
+	master_df.reset_index(inplace=True, drop=True)
+
     return master_df
 
 # Identifies places within a given radius of the latititude and longitude of a given address that match the name in a given list of places.
@@ -76,7 +80,7 @@ def pull_business_json(business, lat_long_string, radius, page_token=None):
                      location=lat_long_string,
                      radius=radius,
                      page_token=page_token,
-                     type=['restaurant','cafe', 'convenience_store', 'food', 'supermarket'])
+                     type=['restaurant','cafe', 'convenience_store', 'food', 'supermarket']) ## Criteria set
     return data
 
 ## Adds places data to a dataframe
@@ -287,7 +291,7 @@ conv_store_list = ["7-eleven", "Kum & Go", "Casey’s General Store", "Cumberlan
 
 ## Default list of grocery stores to look for
 groc_store = ["Trader Joe's", "Safeway", "Natural Grocers", "King Soopers", "Whole Foods", "Hannaford",
-    "Stop & Shop", "Sprouts Farmers Market", "Shaw's Grocery", "Price Chopper", "Wegmans", "Pete’s Fresh Market",
+    "Stop & Shop", "Sprouts Farmers Market", "Shaw's Supermarket", "Price Chopper", "Wegmans", "Pete’s Fresh Market",
     "Kroger", "Albertsons", "Publix", "Bojangles' Famous Chicken 'n Biscuit", "Arby's", "Krystal",
     "Mother Earth Natural Foods", "The Fresh Market"]
 
@@ -308,7 +312,7 @@ swamp_df = calculate_swamp_score(master_df)
 
 
 
-## Exporting data to CSV
+## Exporting master data to CSV
 csv_name = f"../data/exports/granular/{datetime.now().strftime('%Y-%m-%d-%H%M%S_allData')}.csv"
 master_df.to_csv(csv_name, index=False)
 
