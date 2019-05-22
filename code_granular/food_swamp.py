@@ -9,7 +9,7 @@ import regex as re
 
 ## Takes in a list of addresses and outputs the distnance matrix between each address and all the fast food, convenience
 ## and grocery stores nearby
-## PARAMETERS: Search Radius, List of Nearby Businesses
+## INPUT PARAMETERS: Search Radius, List of Nearby Businesses
 def run_address_list(address_list):
     master_df = pd.DataFrame()
     for address in address_list:
@@ -118,7 +118,7 @@ def google_distances(start_address, end_addresses, df):
             df.loc[i,'distance'] = distance_dict['rows'][0]['elements'][0]['distance']['value']
             df.loc[i,'start_address'] = start_address.replace(",","").replace(" ","-")
         
-        ## Redundancy to reduce API errors... probably useless
+        ## Redundancy to reduce API errors... this has actually helped a couple times
         except:
             try:
                 print(f"Distance retrieval failed for {end_address}. Trying again...")
@@ -264,11 +264,11 @@ google_api_key = input("Google API Key: Needs access to Geolocate API, Places AP
 gmaps = googlemaps.Client(key=google_api_key)
 
 
-#################### EDIT THIS PART DEPENDING ON HOW YOU WANT TO INPUT ####################
-## User input
-address_list = input("ADDRESS LIST separate addresses with '//' ")
-address_list =address_list.split("//")
-#################### EDIT THIS PART DEPENDING ON HOW YOU WANT TO INPUT ####################
+#################### EDIT CSV TO CHANGE INPUT ####################
+## Address input as  a single column CSV with "addresss" as header and all addresses below that
+imported_addresses = pd.read_csv('../data/imports/addresses/test.csv')
+address_list = imported_addresses.iloc[:,0].tolist()
+#################### EDIT CSV TO CHANGE INPUT ####################
 
 ## Default search radius (as the crow flies) for locations
 search_radius = input("SEARCH RADIUS (enter for default 3000): ") or 3000
@@ -309,8 +309,6 @@ master_df = calculate_points(master_df)
 
 ## Calculating the swamp score for each start address
 swamp_df = calculate_swamp_score(master_df)
-
-
 
 ## Exporting master data to CSV
 csv_name = f"../data/exports/granular/{datetime.now().strftime('%Y-%m-%d-%H%M%S_allData')}.csv"
