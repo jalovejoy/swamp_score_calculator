@@ -5,8 +5,8 @@ from datetime import datetime
 import pandas as pd
 import regex as re
 
-#################### Defining Functions ####################
 
+#################### Defining Functions ####################
 ## Takes in a list of addresses and outputs the distnance matrix between each address and all the fast food, convenience
 ## and grocery stores nearby
 ## INPUT PARAMETERS: Search Radius, List of Nearby Businesses
@@ -260,17 +260,17 @@ def calculate_swamp_score(df):
         
     return swamp_df
 
+
 #################### User Input ####################
 ## API key input
 google_api_key = input("Google API Key: Needs access to Geolocate API, Places API, Distance Matrix API: ")
 gmaps = googlemaps.Client(key=google_api_key)
 
-
-#################### EDIT CSV TO CHANGE INPUT ####################
+#### EDIT CSV TO CHANGE INPUT ####
 ## Address input as  a single column CSV with "addresss" as header and all addresses below that
 imported_addresses = pd.read_csv('../data/imports/addresses/test.csv')
 address_list = imported_addresses.iloc[:,0].tolist()
-#################### EDIT CSV TO CHANGE INPUT ####################
+#### EDIT CSV TO CHANGE INPUT ####
 
 ## Default search radius (as the crow flies) for locations
 search_radius = input("SEARCH RADIUS (enter for default 3000): ") or 3000
@@ -299,6 +299,7 @@ groc_store = ["Trader Joe's", "Safeway", "Natural Grocers", "King Soopers", "Who
 
 # groc_store = ["Trader Joe's"] #### UNCOMMENT FOR TESTING: Set to a smaller search to save API credits
 
+
 #################### Running Code ####################
 master_df = run_address_list(address_list)
 
@@ -316,6 +317,8 @@ swamp_df = calculate_swamp_score(master_df)
 csv_name = f"../data/exports/granular/{datetime.now().strftime('%Y-%m-%d-%H%M%S_allData')}.csv"
 master_df.to_csv(csv_name, index=False)
 
+
+#################### EXPORTING DATA ####################
 ## Swamp score data
 swamp_csv_name = f"../data/exports/swamp_summary/{datetime.now().strftime('%Y-%m-%d-%H%M%S_swamp')}.csv"
 swamp_df.to_csv(swamp_csv_name, index=False)
