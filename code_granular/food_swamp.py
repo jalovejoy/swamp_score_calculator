@@ -24,7 +24,8 @@ def run_address_list(address_list):
         
         ## Running the search for nearby fast food locations
         print("\nSearching fast food locations...")
-        fast_food_locations = find_nearby_businesses(address_lat_lng, search_radius, fast_food_restaurants, label="fast_food_rest")
+        fast_food_locations = find_nearby_businesses(address_lat_lng, search_radius, fast_food_restaurants,
+            label="fast_food_rest")
 
         ## Running the search for nearby convenience stores
         print("\nSearching convenience store locations...")
@@ -44,12 +45,13 @@ def run_address_list(address_list):
         master_df = pd.concat([master_df, address_df])
 
 	## Drops rows with duplicate addresses –– for example "Chipotle" search may have picked up "Taco Bell" and vice versa
-	master_df = master_df.drop_duplicates(subset="end_address", keep="first")
-	master_df.reset_index(inplace=True, drop=True)
+    master_df = master_df.drop_duplicates(subset="end_address", keep="first")
+    master_df.reset_index(inplace=True, drop=True)
 
     return master_df
 
-# Identifies places within a given radius of the latititude and longitude of a given address that match the name in a given list of places.
+## Identifies places within a given radius of the latititude and longitude of a given address that match the name in a 
+## given list of places.
 ## Creates dataframe for all places that match the name of an input LIST with a given radius of a given lat/lng
 def find_nearby_businesses(lat_long_string, radius, business_list, label):
     df = pd.DataFrame()
@@ -66,7 +68,7 @@ def find_businesses(df, business, lat_long_string, radius, label):
     page_token = data.get('next_page_token', None) # Sets page_token if there were more than 20 places
     time.sleep(2) # Rate limiting to keep API happy
     
-    # Iterates over pages for a given location
+    ## Iterates over pages for a given location
     while page_token != None: 
         data = pull_business_json(business, lat_long_string, radius, page_token)
         df = build_business_df(df, data, business, label)
@@ -281,13 +283,13 @@ fast_food_restaurants = ["McDonald's",'Burger King',"Wendy's","Subway","Starbuck
     "Five Guys", "Waffle House", "Krispy Kreme" "Long John Silver's", "Jersey Mike's Subs",
     "Good Times Burgers & Frozen Custard", "Culver's"]
 
-# fast_food_restaurants = ["McDonald's"] #### FOR TESTING: Set to a smaller search to save API credits
+# fast_food_restaurants = ["McDonald's"] #### UNCOMMENT FOR TESTING: Set to a smaller search to save API credits
 
 ## Default list of convenience stores to look for
 conv_store_list = ["7-eleven", "Kum & Go", "Casey’s General Store", "Cumberland Farms", "Express Mart",
     "Stripes Convenience", "Twice Daily", "Thorntons", "Circle K"]
 
-# conv_store_list = ["7-eleven"] #### FOR TESTING: Set to a smaller search to save API credits
+# conv_store_list = ["7-eleven"] #### UNCOMMENT FOR TESTING: Set to a smaller search to save API credits
 
 ## Default list of grocery stores to look for
 groc_store = ["Trader Joe's", "Safeway", "Natural Grocers", "King Soopers", "Whole Foods", "Hannaford",
@@ -295,7 +297,7 @@ groc_store = ["Trader Joe's", "Safeway", "Natural Grocers", "King Soopers", "Who
     "Kroger", "Albertsons", "Publix", "Bojangles' Famous Chicken 'n Biscuit", "Arby's", "Krystal",
     "Mother Earth Natural Foods", "The Fresh Market"]
 
-# groc_store = ["Trader Joe's"] #### FOR TESTING: Set to a smaller search to save API credits
+# groc_store = ["Trader Joe's"] #### UNCOMMENT FOR TESTING: Set to a smaller search to save API credits
 
 #################### Running Code ####################
 master_df = run_address_list(address_list)
