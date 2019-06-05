@@ -2,14 +2,15 @@
 
 ### Project Summary
 
-The goal of this project is to develop and test a food swamp feature that the [Staple Health](https://staplehealth.io/) platform can use to better predict patient risk, in turn allowing insurers and providers to optimize risk reduction initiatives. The project is broken into four stages. The first two stages operate at the FIPS County level while the latter two focus on food swamps at the address level.
+The goal of this project is to develop and test a food swamp feature that the [Staple Health](https://staplehealth.io/) platform can use to better predict patient outcome risk, in turn allowing insurers and providers to optimize risk reduction initiatives. The project is broken into four stages. The first two stages operate at the FIPS County level while the latter two focus on food swamps at the address level.
 1) Replicating findings from [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) that identified that food swamps are an effective predictor of obesity rates at the FIPS County level.
-2) Examine the effect of food swamps on other healthcare outcomes including: diabetes rates, rates of death from strokes, and life expectancy.
+2) Using the same control set as the previous study, examine the effect of food swamps on other healthcare outcomes including: diabetes rates, rates of death from strokes, and life expectancy.
 3) Develop a tool to determine a food swamp score at the street address level.
 4) Examine the efficacy of the street address level food swamp score for predicting healthcare outcomes at the patient level.
 
 ### Data Collection
-For the FIPS County level study, data is collected from the USDA Food Atlas, USDA Economic Research Service, the Center for Disease Control and Prevention, the American Community Survey, and the 2010 US Census.
+#### County Level Data Collection
+For the FIPS County level study (stages 1-2), data are collected from the USDA Food Atlas, USDA Economic Research Service, the Center for Disease Control and Prevention, the American Community Survey, and the 2010 US Census.
 
 | Variable | Level | Definition | Format | Source | Year |
 |-------------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|------------------------------|-------------------------|
@@ -29,18 +30,38 @@ For the FIPS County level study, data is collected from the USDA Food Atlas, USD
 | avgLifeExpec | FIPS County | The average life expectancy of residents | Float | CDC | 2010 |
 |  |  |  |  |  |  |
 
-The street address level data is collected using the [Google Places API](https://developers.google.com/places/web-service/intro) with a search radius of 3000 meters. The distance from the input address to the grocery, fast food, or convenience store business is calculated using the [Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start). The below diagram provides an overview of the current street level address data collection and processing methodology:
+#### Address Level Data Collection
+The street address level data (stages 3-4) are collected using the [Google Places API](https://developers.google.com/places/web-service/intro) with a search radius of 3000 meters. The distance from the input address to the grocery, fast food, or convenience store business is calculated using the [Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start). The below diagram provides an overview of the current street level address data collection and processing methodology:
 
 ![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/swamp-score-flow.png)
 
+The script currently searches for the following list of businesses:
+| Business Type | Business List |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Fast Food Restaurants |  McDonald's, Burger King, Wendy's, Subway, Starbucks, Dunkin Donuts, Pizza Hut, KFC, Domino's, Baskin-Robbins, Hunt Brothers Pizza, Taco Bell, Hardee's, Papa John's Pizza, Dairy Queen, Little Caesars, Popeyes Louisiana Kitchen, Jimmy John's, Jack in the Box, Chick-fil-A, Chipotle, Panda Express, Denny's, IHOP, Carl's Jr., Five Guys, Waffle House, Krispy Kreme, Long John Silver's, Jersey Mike's Subs, Good Times Burgers & Frozen Custard, Culver's |
+| Convenience Stores | 7-eleven, Kum & Go, Casey’s General Store, Cumberland Farms, Express Mart, Stripes Convenience, Twice Daily, Thorntons, Circle K |
+| Grocery Stores | Trader Joe's, Safeway, Natural Grocers, King Soopers, Whole Foods, Hannaford, Stop & Shop, Sprouts Farmers Market, Shaw's Supermarket, Price Chopper, Wegmans, Pete’s Fresh Market, Kroger, Albertsons, Publix, Bojangles' Famous Chicken 'n Biscuit, Arby's, Krystal, Mother Earth Natural Foods, The Fresh Market |
+
+Google's Places API also makes intuitive decisions about a user's needs: as an example, a search for "Taco Bell" may also retrieve other Mexican or taco restaurants. While this increases the probability of false positives, a survey of the data revealed that more often Google's intuition collected similar restaurants that could be deemed true positives (ie. it pulls non-mainstream fast food restaurants even when the search if "McDonald's"). Regardless, this meant a de-duplication process was essential to ensure that restaurants were not picked up twice (ie. a "Taco Bell" search picking up "Chipotle" locations and vice versa).
+
 Recognizing that consumers are more likely to shop at a closer location than a further away location, a weighting system was applied to locations within an hour of the starting address (anything more than an hour was not counted). For each starting or input address, the weight of each business location is calculated in 3 ways:
+**INSERT IMAGE**
 - Points = (# places <10 minutes x 3) + (# places < 20 minutes x 2) + (# places < 60 minutes x 1)
 - Gradient Points = abs(time to business in seconds - 3600)
 - Exponential Gradient Points = (abs(time to business in seconds - 3600) ** 3) / 1_000_000_000
 
 The output of this script is a **Swamp Score Summary** CSV that includes the points for each establishment type (Fast Food, Grocery Store, Convenience Store) as well as the composite swamp score for each of the three scoring methodologies.
 
-The data has been ommitted from this repository but can easily be collected by running the data_collection_location_based.ipynb notebook in /code_granular/.
+| Column | Description | Format |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
+| Address | The address input for swamp score calculation | String |
+| State | The state in which the address exists | String (Two chars) |
+| conv_store_points | The total points calculated for all convenience stores within an hour driving distance of the input location. This variable is provided in 3 formats: standard, gradient, exponential decay | Float |
+| fast_food_points | The total points calculated for all fast food restaurants within an hour driving distance of the input location. This variable is provided in 3 formats: standard, gradient, exponential decay | Float |
+| groc_store_points | The total points calculated for all grocery stores within an hour driving distance of the input location. This variable is provided in 3 formats: standard, gradient, exponential decay | Float |
+| swamp_score | Defined as: (conv_store_points + fast_food_points) / groc_store_pointsAgain this is provided with standard, gradient, and exponential decay weightings | Float |
+
+The data has been ommitted from this repository but can easily be tested by running the data_collection_location_based.ipynb notebook in /code_granular/.
 
 ### Findings & Results
 
