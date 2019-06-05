@@ -63,7 +63,7 @@ The output of this script is a **Swamp Score Summary** CSV that includes the poi
 | conv_store_points | The total points calculated for all convenience stores within an hour driving distance of the input location. This variable is provided in 3 formats: stepwise, linear, exponential decay | Float |
 | fast_food_points | The total points calculated for all fast food restaurants within an hour driving distance of the input location. This variable is provided in 3 formats: stepwise, linear, exponential decay | Float |
 | groc_store_points | The total points calculated for all grocery stores within an hour driving distance of the input location. This variable is provided in 3 formats: stepwise, linear, exponential decay | Float |
-| swamp_score | Defined as: (conv_store_points + fast_food_points) / groc_store_pointsAgain this is provided with stepwise, linear, and exponential decay weightings | Float |
+| swamp_score | Defined as: (conv_store_points + fast_food_points) / groc_store_points. Again this is provided with stepwise, linear, and exponential decay weightings | Float |
 | | | |
 
 The data has been ommitted from this repository but can easily be tested by running the data_collection_location_based.ipynb notebook in /code_granular/.
@@ -76,7 +76,7 @@ This study does not attempt to optimize a prediction (r<sup>2</sup> score) for o
 The figure below showcases the predictions from this model against the actual obesity rates. The color represents the Natural Amenity Index for that county, a feature which had the second strongest effect on obesity rates.
 ![alt text](https://raw.githubusercontent.com/jalovejoy/swamp_score_calculator/master/images/predictionsVactual.png)
 
-The absolute value of the standardized coefficients shows that the size of the effect of food swamps was smaller than that of the milk / soda price ratio and the % of people over 65 – both of which also showed statistically significant relationships with obesity.
+The absolute value of the standardized coefficients shows that the size of the effect of food swamps was larger than that of the milk / soda price ratio and the % of people over 65 – both of which also showed statistically significant relationships with obesity.
 
 ![alt text](https://raw.githubusercontent.com/jalovejoy/swamp_score_calculator/master/images/absCoefficients.png)
 
