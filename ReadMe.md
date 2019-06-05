@@ -1,6 +1,6 @@
 # The Efficacy of Food Swamps as a Healthcare Outcomes Predictor
 
-![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/burger.png)
+![alt text](https://raw.githubusercontent.com/jalovejoy/swamp_score_calculator/master/images/burger.jpeg)
 
 ## Project Summary
 
