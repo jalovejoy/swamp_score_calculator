@@ -35,7 +35,7 @@ The street address level data (stages 3-4) are collected using the [Google Place
 
 ![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/swamp-score-flow.png)
 
-The script currently searches for the following list of businesses:
+The script currently searches for the below list of nearby businesses.
 | Business Type | Business List |
 |-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Fast Food Restaurants |  McDonald's, Burger King, Wendy's, Subway, Starbucks, Dunkin Donuts, Pizza Hut, KFC, Domino's, Baskin-Robbins, Hunt Brothers Pizza, Taco Bell, Hardee's, Papa John's Pizza, Dairy Queen, Little Caesars, Popeyes Louisiana Kitchen, Jimmy John's, Jack in the Box, Chick-fil-A, Chipotle, Panda Express, Denny's, IHOP, Carl's Jr., Five Guys, Waffle House, Krispy Kreme, Long John Silver's, Jersey Mike's Subs, Good Times Burgers & Frozen Custard, Culver's |
@@ -45,7 +45,9 @@ The script currently searches for the following list of businesses:
 Google's Places API also makes intuitive decisions about a user's needs: as an example, a search for "Taco Bell" may also retrieve other Mexican or taco restaurants. While this increases the probability of false positives, a survey of the data revealed that more often Google's intuition collected similar restaurants that could be deemed true positives (ie. it pulls non-mainstream fast food restaurants even when the search if "McDonald's"). Regardless, this meant a de-duplication process was essential to ensure that restaurants were not picked up twice (ie. a "Taco Bell" search picking up "Chipotle" locations and vice versa).
 
 Recognizing that consumers are more likely to shop at a closer location than a further away location, a weighting system was applied to locations within an hour of the starting address (anything more than an hour was not counted). For each starting or input address, the weight of each business location is calculated in 3 ways:
-**INSERT IMAGE**
+
+![alt text](https://raw.githubusercontent.com/jalovejoy/swamp_score_calculator/master/images/score-weightings.png)
+
 - Points = (# places <10 minutes x 3) + (# places < 20 minutes x 2) + (# places < 60 minutes x 1)
 - Gradient Points = abs(time to business in seconds - 3600)
 - Exponential Gradient Points = (abs(time to business in seconds - 3600) ** 3) / 1_000_000_000
@@ -60,14 +62,22 @@ The output of this script is a **Swamp Score Summary** CSV that includes the poi
 | fast_food_points | The total points calculated for all fast food restaurants within an hour driving distance of the input location. This variable is provided in 3 formats: standard, gradient, exponential decay | Float |
 | groc_store_points | The total points calculated for all grocery stores within an hour driving distance of the input location. This variable is provided in 3 formats: standard, gradient, exponential decay | Float |
 | swamp_score | Defined as: (conv_store_points + fast_food_points) / groc_store_pointsAgain this is provided with standard, gradient, and exponential decay weightings | Float |
+| | | |
 
 The data has been ommitted from this repository but can easily be tested by running the data_collection_location_based.ipynb notebook in /code_granular/.
 
 ### Findings & Results
 
-This study does not attempt to optimize a prediction (r<sup>2</sup> score) for obesity but rather intends to identify the efficacy of food swamps as a predictor at a statistically significant (p < 0.001) level. Using the same controls applied in the [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) study (Food Desert, Recreation Facilities, Natural Amenities, Milk/Soda Price Ratio, % Black, % Hispanic, Poverty Rate, County Size), significant relationships are found between food swamp scores and obesity, diabetes, deaths from strokes, and life expectancy. The findings from this stage emphasize the importance of food quality on health and support the idea that a food swamp metric is a valuable healthcare indicator. The notebooks for these results can be found under /code/.
+#### County Level Findings
+This study does not attempt to optimize a prediction (r<sup>2</sup> score) for obesity but rather intends to identify the efficacy of food swamps as a predictor at a statistically significant (p < 0.001) level. Using the same controls applied in the [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) study (Food Desert, Recreation Facilities, Natural Amenities, Milk/Soda Price Ratio, % Black, % Hispanic, Poverty Rate, County Size), significant relationships are found between food swamp scores and obesity, diabetes, deaths from strokes, and life expectancy.
 
-Additionally, this project successfully built a tool to calculate food swamp scores at the street address level. As of 2019-05-16, data on over 15,000 businesses (fast food restaurants, convenience stores, grocery stores) have been collected and food swamp scores have been calculated for 18 addresses. [Staple Health](https://staplehealth.io/) is currently testing this tool on HIPAA protected patient data to determine its efficacy as an input in their machine learning models. Results are expected by June 10. The notebooks for these can be found under /code/granular/.
+**IMAGE**
+
+Even after controlling for obesity, food swamps maintained a statistically significant correlation to all three healthcare outcomes, albeit with a smaller coefficient. The findings from this stage emphasize the importance of food quality on health and support the idea that a food swamp metric is a valuable healthcare indicator, which has powerful policy and public health implications. The notebooks for these results can be found under /code/.
+
+#### Address Level Findings
+
+Additionally, this project successfully built a tool to calculate food swamp scores at the street address level. [Staple Health](https://staplehealth.io/) is currently testing this tool on HIPAA protected patient data to determine its efficacy as an input in their machine learning models. Results are expected by July 10. The notebooks for these can be found under /code/granular/.
 
 ### Limitations & Considerations
 
