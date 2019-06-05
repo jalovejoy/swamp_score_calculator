@@ -36,6 +36,7 @@ The street address level data (stages 3-4) are collected using the [Google Place
 ![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/swamp-score-flow.png)
 
 The script currently searches for the below list of nearby businesses.
+
 | Business Type | Business List |
 |-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Fast Food Restaurants |  McDonald's, Burger King, Wendy's, Subway, Starbucks, Dunkin Donuts, Pizza Hut, KFC, Domino's, Baskin-Robbins, Hunt Brothers Pizza, Taco Bell, Hardee's, Papa John's Pizza, Dairy Queen, Little Caesars, Popeyes Louisiana Kitchen, Jimmy John's, Jack in the Box, Chick-fil-A, Chipotle, Panda Express, Denny's, IHOP, Carl's Jr., Five Guys, Waffle House, Krispy Kreme, Long John Silver's, Jersey Mike's Subs, Good Times Burgers & Frozen Custard, Culver's |
