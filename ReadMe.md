@@ -1,6 +1,6 @@
 # The Efficacy of Food Swamps as a Healthcare Outcomes Predictor
 
-### Project Summary
+## Project Summary
 
 The goal of this project is to develop and test a food swamp feature that the [Staple Health](https://staplehealth.io/) platform can use to better predict patient outcome risk, in turn allowing insurers and providers to optimize risk reduction initiatives. The project is broken into four stages. The first two stages operate at the FIPS County level while the latter two focus on food swamps at the address level.
 1) Replicating findings from [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) that identified that food swamps are an effective predictor of obesity rates at the FIPS County level.
@@ -8,7 +8,7 @@ The goal of this project is to develop and test a food swamp feature that the [S
 3) Develop a tool to determine a food swamp score at the street address level.
 4) Examine the efficacy of the street address level food swamp score for predicting healthcare outcomes at the patient level.
 
-### Data Collection
+## Data Collection
 #### County Level Data Collection
 For the FIPS County level study (stages 1-2), data are collected from the USDA Food Atlas, USDA Economic Research Service, the Center for Disease Control and Prevention, the American Community Survey, and the 2010 US Census.
 
@@ -48,9 +48,9 @@ Recognizing that consumers are more likely to shop at a closer location than a f
 
 ![alt text](https://raw.githubusercontent.com/jalovejoy/swamp_score_calculator/master/images/score-weightings.png)
 
-- Points = (# places <10 minutes x 3) + (# places < 20 minutes x 2) + (# places < 60 minutes x 1)
-- Gradient Points = abs(time to business in seconds - 3600)
-- Exponential Gradient Points = (abs(time to business in seconds - 3600) ** 3) / 1_000_000_000
+- Stepwise Points = (# places <10 minutes x 3) + (# places < 20 minutes x 2) + (# places < 60 minutes x 1)
+- Linear Points = abs(time to business in seconds - 3600)
+- Exponential Points = (abs(time to business in seconds - 3600) ** 3) / 1_000_000_000
 
 The output of this script is a **Swamp Score Summary** CSV that includes the points for each establishment type (Fast Food, Grocery Store, Convenience Store) as well as the composite swamp score for each of the three scoring methodologies.
 
@@ -58,20 +58,25 @@ The output of this script is a **Swamp Score Summary** CSV that includes the poi
 |-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
 | Address | The address input for swamp score calculation | String |
 | State | The state in which the address exists | String (Two chars) |
-| conv_store_points | The total points calculated for all convenience stores within an hour driving distance of the input location. This variable is provided in 3 formats: standard, gradient, exponential decay | Float |
-| fast_food_points | The total points calculated for all fast food restaurants within an hour driving distance of the input location. This variable is provided in 3 formats: standard, gradient, exponential decay | Float |
-| groc_store_points | The total points calculated for all grocery stores within an hour driving distance of the input location. This variable is provided in 3 formats: standard, gradient, exponential decay | Float |
-| swamp_score | Defined as: (conv_store_points + fast_food_points) / groc_store_pointsAgain this is provided with standard, gradient, and exponential decay weightings | Float |
+| conv_store_points | The total points calculated for all convenience stores within an hour driving distance of the input location. This variable is provided in 3 formats: stepwise, linear, exponential decay | Float |
+| fast_food_points | The total points calculated for all fast food restaurants within an hour driving distance of the input location. This variable is provided in 3 formats: stepwise, linear, exponential decay | Float |
+| groc_store_points | The total points calculated for all grocery stores within an hour driving distance of the input location. This variable is provided in 3 formats: stepwise, linear, exponential decay | Float |
+| swamp_score | Defined as: (conv_store_points + fast_food_points) / groc_store_pointsAgain this is provided with stepwise, linear, and exponential decay weightings | Float |
 | | | |
 
 The data has been ommitted from this repository but can easily be tested by running the data_collection_location_based.ipynb notebook in /code_granular/.
 
-### Findings & Results
+## Findings & Results
 
 #### County Level Findings
 This study does not attempt to optimize a prediction (r<sup>2</sup> score) for obesity but rather intends to identify the efficacy of food swamps as a predictor at a statistically significant (p < 0.001) level. Using the same controls applied in the [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) study (Food Desert, Recreation Facilities, Natural Amenities, Milk/Soda Price Ratio, % Black, % Hispanic, Poverty Rate, County Size), significant relationships are found between food swamp scores and obesity, diabetes, deaths from strokes, and life expectancy.
 
-**IMAGE**
+The figure below showcases the predictions from this model against the actual obesity rates. The color represents the Natural Amenity Index for that county, a feature which had the second strongest effect on obesity rates.
+![alt text](https://raw.githubusercontent.com/jalovejoy/swamp_score_calculator/master/images/predictionsVactual.png)
+
+The absolute value of the standardized coefficients shows that the size of the effect of food swamps was smaller than that of the milk / soda price ratio and the % of people over 65 – both of which also showed statistically significant relationships with obesity.
+
+![alt text](https://raw.githubusercontent.com/jalovejoy/swamp_score_calculator/master/images/absCoefficients.png)
 
 Even after controlling for obesity, food swamps maintained a statistically significant correlation to all three healthcare outcomes, albeit with a smaller coefficient. The findings from this stage emphasize the importance of food quality on health and support the idea that a food swamp metric is a valuable healthcare indicator, which has powerful policy and public health implications. The notebooks for these results can be found under /code/.
 
@@ -79,7 +84,7 @@ Even after controlling for obesity, food swamps maintained a statistically signi
 
 Additionally, this project successfully built a tool to calculate food swamp scores at the street address level. [Staple Health](https://staplehealth.io/) is currently testing this tool on HIPAA protected patient data to determine its efficacy as an input in their machine learning models. Results are expected by July 10. The notebooks for these can be found under /code/granular/.
 
-### Limitations & Considerations
+## Limitations & Considerations
 
 This project essentially acts as preliminary research and development into a feature for a larger model predicting a variety of healthcare outcomes. It's possible that while food swamps may be statistically significantly correlated with the healthcare outcomes researched in this project under the controls that [Cooksey-Stowers et al](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5708005/) used, the food swamp score may have multicollinearity or may be statistically insignificant when paired with the larger feature set in [Staple Health's](https://staplehealth.io/) current platform.
 
