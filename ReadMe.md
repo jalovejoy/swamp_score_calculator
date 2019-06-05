@@ -1,5 +1,7 @@
 # The Efficacy of Food Swamps as a Healthcare Outcomes Predictor
 
+![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/burger.png)
+
 ## Project Summary
 
 The goal of this project is to develop and test a food swamp feature that the [Staple Health](https://staplehealth.io/) platform can use to better predict patient outcome risk, in turn allowing insurers and providers to optimize risk reduction initiatives. The project is broken into four stages. The first two stages operate at the FIPS County level while the latter two focus on food swamps at the address level.
