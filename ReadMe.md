@@ -35,7 +35,7 @@ For the FIPS County level study (stages 1-2), data are collected from the USDA F
 #### Address Level Data Collection
 The street address level data (stages 3-4) are collected using the [Google Places API](https://developers.google.com/places/web-service/intro) with a search radius of 3000 meters. The distance from the input address to the grocery, fast food, or convenience store business is calculated using the [Google Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start). The below diagram provides an overview of the current street level address data collection and processing methodology:
 
-![alt text](https://raw.git.generalassemb.ly/JamesLovejoy-DEN/project_6/master/images/swamp-score-flow.png)
+![alt text](https://raw.githubusercontent.com/jalovejoy/swamp_score_calculator/master/images/swamp-score-flow.png)
 
 The script currently searches for the below list of nearby businesses.
 
