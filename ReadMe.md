@@ -86,7 +86,7 @@ Even after controlling for obesity, food swamps maintained a statistically signi
 
 #### Address Level Findings
 
-Additionally, this project successfully built a tool to calculate food swamp scores at the street address level. [Staple Health](https://staplehealth.io/) is currently testing this tool on HIPAA protected patient data to determine its efficacy as an input in their machine learning models. Results are expected by July 10. The notebooks for these can be found under /code/granular/.
+Additionally, this project successfully built a tool to calculate food swamp scores at the street address level. [Staple Health](https://staplehealth.io/) is currently testing this tool on HIPAA protected patient data to determine its efficacy as an input in their machine learning models. Results are expected by July 10. The notebooks for these can be found under /code_granular/.
 
 ## Limitations & Considerations
 
