@@ -7,8 +7,8 @@ import regex as re
 
 
 #################### Defining Functions ####################
-## Takes in a list of addresses and outputs the distnance matrix between each address and all the fast food, convenience
-## and grocery stores nearby
+## Takes in a list of addresses and outputs the distnance matrix between each address and all the 
+## fast food, convenience and grocery stores nearby
 ## INPUT PARAMETERS: Search Radius, List of Nearby Businesses
 def run_address_list(address_list):
     master_df = pd.DataFrame()
@@ -44,7 +44,8 @@ def run_address_list(address_list):
 
         master_df = pd.concat([master_df, address_df])
 
-	## Drops rows with duplicate addresses –– for example "Chipotle" search may have picked up "Taco Bell" and vice versa
+	## Drops rows with duplicate addresses –– for example "Chipotle" search may have picked 
+	## up "Taco Bell" and vice versa
     master_df = master_df.drop_duplicates(subset="end_address", keep="first")
     master_df.reset_index(inplace=True, drop=True)
 
@@ -62,7 +63,7 @@ def find_nearby_businesses(lat_long_string, radius, business_list, label):
 
 ## Finds all the places that match a SINGLE given name within a given radius of a given lat/lng
 def find_businesses(df, business, lat_long_string, radius, label):
-    data = pull_business_json(business, lat_long_string, radius, page_token=None) # Gets JSON data from Google Places API
+    data = pull_business_json(business, lat_long_string, radius, page_token=None) # Gets JSON via Google Places API
     
     df = build_business_df(df, data, business, label) # Adds to dataframe
     page_token = data.get('next_page_token', None) # Sets page_token if there were more than 20 places
@@ -235,13 +236,16 @@ def calculate_swamp_score(df):
         swamp_df.loc[i, 'swamp_score'] = (conv_store_points + fast_food_points) / groc_store_points
         
         ## Linear gradient score
-        conv_store_grad_points = df[df['start_address'] == i_address].groupby('label').sum()['gradient_points']['conv_store']
+        conv_store_grad_points = df[df['start_address'] == i_address].groupby('label')\
+        	.sum()['gradient_points']['conv_store']
         swamp_df.loc[i,'conv_store_grad_points'] = conv_store_grad_points
         
-        fast_food_grad_points = df[df['start_address'] == i_address].groupby('label').sum()['gradient_points']['fast_food_rest']
+        fast_food_grad_points = df[df['start_address'] == i_address].groupby('label')\
+        	.sum()['gradient_points']['fast_food_rest']
         swamp_df.loc[i,'fast_food_grad_points'] = fast_food_grad_points
         
-        groc_store_grad_points = df[df['start_address'] == i_address].groupby('label').sum()['gradient_points']['groc_store']
+        groc_store_grad_points = df[df['start_address'] == i_address].groupby('label')\
+        	.sum()['gradient_points']['groc_store']
         swamp_df.loc[i,'groc_store_grad_points'] = groc_store_points
         
         swamp_df.loc[i, 'grad_swamp_score'] = (conv_store_grad_points + fast_food_grad_points) / groc_store_grad_points
@@ -250,7 +254,8 @@ def calculate_swamp_score(df):
         conv_store_exp_points = df[df['start_address'] == i_address].groupby('label').sum()['exp_points']['conv_store']
         swamp_df.loc[i,'conv_store_exp_points'] = conv_store_exp_points
 
-        fast_food_exp_points = df[df['start_address'] == i_address].groupby('label').sum()['exp_points']['fast_food_rest']
+        fast_food_exp_points = df[df['start_address'] == i_address].groupby('label')\
+        	.sum()['exp_points']['fast_food_rest']
         swamp_df.loc[i,'fast_food_exp_points'] = fast_food_exp_points
 
         groc_store_exp_points = df[df['start_address'] == i_address].groupby('label').sum()['exp_points']['groc_store']
@@ -280,7 +285,8 @@ fast_food_restaurants = ["McDonald's",'Burger King',"Wendy's","Subway","Starbuck
     "Pizza Hut", "KFC", "Domino's", "Baskin-Robbins", "Hunt Brothers Pizza", "Taco Bell", "Hardee's",
     "Papa John's Pizza", "Dairy Queen", "Little Caesars", "Popeyes Louisiana Kitchen", "Jimmy John's",
     "Jack in the Box", "Chick-fil-A", "Chipotle", "Panda Express", "Denny's", "IHOP", "Carl's Jr.",
-    "Five Guys", "Waffle House", "Krispy Kreme", "Long John Silver's", "Jersey Mike's Subs",
+    "Five Guys", "Waffle House", "Krispy Kreme", "Long John Silver's", "Jersey Mike's Subs", 
+    "Krystal Burger", "Bojangles' Famous Chicken 'n Biscuit", "Arby's", 
     "Good Times Burgers & Frozen Custard", "Culver's"]
 
 # fast_food_restaurants = ["McDonald's"] #### UNCOMMENT FOR TESTING: Set to a smaller search to save API credits
@@ -294,8 +300,7 @@ conv_store_list = ["7-eleven", "Kum & Go", "Casey’s General Store", "Cumberlan
 ## Default list of grocery stores to look for
 groc_store = ["Trader Joe's", "Safeway", "Natural Grocers", "King Soopers", "Whole Foods", "Hannaford",
     "Stop & Shop", "Sprouts Farmers Market", "Shaw's Supermarket", "Price Chopper", "Wegmans", "Pete’s Fresh Market",
-    "Kroger", "Albertsons", "Publix", "Bojangles' Famous Chicken 'n Biscuit", "Arby's", "Krystal",
-    "Mother Earth Natural Foods", "The Fresh Market"]
+    "Kroger", "Albertsons", "Publix", "Mother Earth Natural Foods", "The Fresh Market"]
 
 # groc_store = ["Trader Joe's"] #### UNCOMMENT FOR TESTING: Set to a smaller search to save API credits
 
